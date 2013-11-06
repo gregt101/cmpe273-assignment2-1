@@ -6,38 +6,48 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class Book {
-
-    public enum Status {
-	available("available"), checkedout("checkedout"), lost("lost");
+public class Book 
+{
+	private String disabled;
+	
+	public enum Status 
+	{
+	  available("available"), checkedout("checkedout"), lost("lost");
 
 	private String value;
 
-	Status(String value) {
+	Status(String value) 
+	{
 	    this.value = value;
 	}
 
-	public String getValue() {
+	public String getValue() 
+	{
 	    return value;
 	}
 
 	@Override
-	public String toString() {
+	public String toString() 
+	{
 	    return this.getValue();
 	}
 
-	public static Status getEnum(String value) {
-	    if (value == null) {
+	public static Status getEnum(String value)
+	{
+	    if (value == null) 
+	    {
 		throw new IllegalArgumentException();
 	    }
-	    for (Status v : values()) {
-		if (value.equalsIgnoreCase(v.getValue())) {
-		    return v;
-		}
+	    for (Status v : values()) 
+	    {
+	    	if (value.equalsIgnoreCase(v.getValue())) 
+	    	{
+	    		return v;
+	    	}
 	    }
-	    throw new IllegalArgumentException();
+	throw new IllegalArgumentException();
 	}
-    }
+	}
 
     @NotNull
     private long isbn;
@@ -56,7 +66,8 @@ public class Book {
     /**
      * @return the isbn
      */
-    public long getIsbn() {
+    public long getIsbn() 
+    {
 	return isbn;
     }
 
@@ -64,14 +75,16 @@ public class Book {
      * @param isbn
      *            the isbn to set
      */
-    public void setIsbn(long isbn) {
+    public void setIsbn(long isbn) 
+    {
 	this.isbn = isbn;
     }
 
     /**
      * @return the title
      */
-    public String getTitle() {
+    public String getTitle() 
+    {
 	return title;
     }
 
@@ -79,14 +92,16 @@ public class Book {
      * @param title
      *            the title to set
      */
-    public void setTitle(String title) {
+    public void setTitle(String title) 
+    {
 	this.title = title;
     }
 
     /**
      * @return the category
      */
-    public String getCategory() {
+    public String getCategory() 
+    {
 	return category;
     }
 
@@ -94,14 +109,16 @@ public class Book {
      * @param category
      *            the category to set
      */
-    public void setCategory(String category) {
+    public void setCategory(String category) 
+    {
 	this.category = category;
     }
 
     /**
      * @return the coverimage
      */
-    public URL getCoverimage() {
+    public URL getCoverimage() 
+    {
 	return coverimage;
     }
 
@@ -109,14 +126,16 @@ public class Book {
      * @param coverimage
      *            the coverimage to set
      */
-    public void setCoverimage(URL coverImage) {
+    public void setCoverimage(URL coverImage) 
+    {
 	this.coverimage = coverImage;
     }
 
     /**
      * @return the status
      */
-    public Status getStatus() {
+    public Status getStatus() 
+    {
 	return status;
     }
 
@@ -124,8 +143,18 @@ public class Book {
      * @param status
      *            the status to set
      */
-    public void setStatus(Status status) {
+    public void setStatus(Status status) 
+    {
 	this.status = status;
     }
+    
+    public String getDisabled() 
+    {
+    	return disabled;
+    }
 
+    public void setDisabled(String disabled) 
+    {
+    	this.disabled = disabled;
+    }
 }

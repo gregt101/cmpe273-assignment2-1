@@ -6,7 +6,7 @@ import de.spinscale.dropwizard.jobs.annotations.Every;
 import java.util.Date;
 import java.util.List;
 
-@Every("1s")
+@Every("5mn")
 public class EveryTestJob extends Job {
 
     public static List<String> results = Lists.newArrayList();

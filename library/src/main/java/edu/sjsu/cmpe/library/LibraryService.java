@@ -28,7 +28,7 @@ public class LibraryService extends Service<LibraryServiceConfiguration> {
     public void initialize(Bootstrap<LibraryServiceConfiguration> bootstrap) {
 	bootstrap.setName("library-service");
 	bootstrap.addBundle(new ViewBundle());
-	bootstrap.addBundle(new AssetsBundle());
+	bootstrap.addBundle(new AssetsBundle());	
     }
 
     @Override
@@ -37,8 +37,12 @@ public class LibraryService extends Service<LibraryServiceConfiguration> {
 	// This is how you pull the configurations from library_x_config.yml
 	String queueName = configuration.getStompQueueName();
 	String topicName = configuration.getStompTopicName();
+	String userName = configuration.getApolloUser();
+	String passWord = configuration.getApolloPassword();
+	String hostNum = configuration.getApolloHost();
+	Integer portNum = configuration.getApolloPort();
 	log.debug("{} - Queue name is {}. Topic name is {}",
-		configuration.getLibraryName(), queueName,
+		configuration.getLibraryName(),userName,passWord,hostNum,portNum,queueName,
 		topicName);
 	// TODO: Apollo STOMP Broker URL and login
 
