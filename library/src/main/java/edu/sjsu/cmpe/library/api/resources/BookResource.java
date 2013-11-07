@@ -120,8 +120,8 @@ public class BookResource
     @Timed(name = "delete-book")
     public BookDto deleteBook(@PathParam("isbn") LongParam isbn) 
     {
-	bookRepository.delete(isbn.get());
-	BookDto bookResponse = new BookDto(null);
+    bookRepository.delete(isbn.get());
+    BookDto bookResponse = new BookDto(null);
 	bookResponse.addLink(new LinkDto("create-book", "/books", "POST"));
 	return bookResponse;
     }

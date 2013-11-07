@@ -30,7 +30,7 @@ public class ProcurementService extends Service<ProcurementServiceConfiguration>
     public void initialize(Bootstrap<ProcurementServiceConfiguration> bootstrap)
     {
 	bootstrap.setName("procurement-service");
-	bootstrap.addBundle(new JobsBundle("edu.sjsu.cmpe.procurement.jobs"));
+	bootstrap.addBundle(new JobsBundle("edu.sjsu.cmpe.procurement"));
     }
 
     @Override
@@ -52,11 +52,11 @@ public class ProcurementService extends Service<ProcurementServiceConfiguration>
 	 */
 	environment.addResource(new RootResource());
 
-	Consumerq queueConsumer = new Consumerq(configuration);
-    queueConsumer.initQueue();
+	Consumerq Qconsumer = new Consumerq(configuration);
+    Qconsumer.initQueue();
 	
-    Publishert topic = new Publishert(configuration,jerseyClient);
-    topic.initTopic();
+    Publishert Tpublisher = new Publishert(configuration,jerseyClient);
+    Tpublisher.initTopic();
 
     }
 }

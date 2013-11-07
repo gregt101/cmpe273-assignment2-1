@@ -7,6 +7,7 @@ import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+//import javax.ws.rs.core.MediaType;
 
 import org.fusesource.stomp.jms.StompJmsConnectionFactory;
 import org.fusesource.stomp.jms.StompJmsDestination;
@@ -66,7 +67,7 @@ public class Consumerq extends Job
 			e.printStackTrace();
 		}
 	}
-	public void submitBookOrder(OrderBook book)
+	public void submitBookOrder(BookOrders book)
 	{
 		//Post response to Publisher
 		try
@@ -87,10 +88,10 @@ public class Consumerq extends Job
 	{
 		try 
 		{
-			System.out.println("Waiting for messages from " + queue + "...");
+			System.out.println("Waiting for messages from " + queueName + "...");
 			String body = "";
 			Message msg;
-			OrderBook book = new OrderBook();
+			BookOrders book = new BookOrders();
 			boolean isBookLost = false;
 			while((msg = consumer.receive(1000*30)) !=null)
 			{

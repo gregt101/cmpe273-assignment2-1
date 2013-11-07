@@ -1,4 +1,4 @@
-package edu.sjsu.cmpe.procurement.domain;
+	package edu.sjsu.cmpe.procurement.domain;
 
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;

@@ -21,7 +21,6 @@ import edu.sjsu.cmpe.library.repository.BookRepositoryInterface;
 
 public class Listenert implements Runnable
 {
-
 	private String userName; 
 	private String passWord; 
 	private String hostNum; 
