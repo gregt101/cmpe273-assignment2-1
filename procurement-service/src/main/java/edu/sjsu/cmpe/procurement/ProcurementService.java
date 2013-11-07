@@ -19,8 +19,6 @@ public class ProcurementService extends Service<ProcurementServiceConfiguration>
 {
     //private final Logger log = LoggerFactory.getLogger(getClass());
 
-    final Client jerseyClient;
-
     public static void main(String[] args) throws Exception 
     {
 	new ProcurementService().run(args);
@@ -37,7 +35,7 @@ public class ProcurementService extends Service<ProcurementServiceConfiguration>
     public void run(ProcurementServiceConfiguration configuration,
 	    Environment environment) throws Exception 
 	{
-	jerseyClient = new JerseyClientBuilder()
+	final Client jerseyClient = new JerseyClientBuilder()
 				   .using(configuration.getJerseyClientConfiguration())
 				   .using(environment)
 				   .build();

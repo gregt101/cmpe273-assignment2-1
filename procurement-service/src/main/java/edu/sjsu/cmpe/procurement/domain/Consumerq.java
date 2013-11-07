@@ -7,7 +7,7 @@ import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
-//import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MediaType;
 
 import org.fusesource.stomp.jms.StompJmsConnectionFactory;
 import org.fusesource.stomp.jms.StompJmsDestination;
@@ -67,7 +67,7 @@ public class Consumerq extends Job
 			e.printStackTrace();
 		}
 	}
-	public void submitBookOrder(BookOrders book)
+	public void submitBookOrders(BookOrders book)
 	{
 		//Post response to Publisher
 		try
@@ -107,7 +107,7 @@ public class Consumerq extends Job
 				}
 			}
 			if(isBookLost)
-			submitBookOrder(book);
+			submitBookOrders(book);
 		}
 		catch(Exception e)
 		{
