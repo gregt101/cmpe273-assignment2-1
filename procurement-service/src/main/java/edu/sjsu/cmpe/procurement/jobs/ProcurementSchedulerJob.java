@@ -1,5 +1,6 @@
-package edu.sjsu.cmpe.procurement.jobs;
-
+/**
+ package edu.sjsu.cmpe.procurement.jobs;
+ 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,14 +11,18 @@ import edu.sjsu.cmpe.procurement.ProcurementService;
 /**
  * This job will run at every 5 minutes.
  */
+/*
 @Every("5mn")
-public class ProcurementSchedulerJob extends Job {
+public class ProcurementSchedulerJob extends Job 
+{
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Override
-    public void doJob() {
+    public void doJob() 
+    {
 	String strResponse = ProcurementService.jerseyClient.resource(
 		"http://ip.jsontest.com/").get(String.class);
 	log.debug("Response from jsontest.com: {}", strResponse);
     }
 }
+*/

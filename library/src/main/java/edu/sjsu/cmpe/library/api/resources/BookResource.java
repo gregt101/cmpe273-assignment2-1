@@ -22,25 +22,40 @@ import edu.sjsu.cmpe.library.domain.Book.Status;
 import edu.sjsu.cmpe.library.dto.BookDto;
 import edu.sjsu.cmpe.library.dto.BooksDto;
 import edu.sjsu.cmpe.library.dto.LinkDto;
+import edu.sjsu.cmpe.library.domain.Producerq;
+import edu.sjsu.cmpe.library.domain.Listenert;
 import edu.sjsu.cmpe.library.repository.BookRepositoryInterface;
+import edu.sjsu.cmpe.library.config.LibraryServiceConfiguration;
 
 @Path("/v1/books")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class BookResource {
+public class BookResource 
+{
     /** bookRepository instance */
     private final BookRepositoryInterface bookRepository;
-
+    private LibraryServiceConfiguration configuration;
+    private Producerq Qproducer;  
+    private Listenert Tlistener;
     /**
      * BookResource constructor
      * 
      * @param bookRepository
      *            a BookRepository instance
      */
-    public BookResource(BookRepositoryInterface bookRepository) {
-	this.bookRepository = bookRepository;
+    public BookResource(BookRepositoryInterface bookRepository,
+    		LibraryServiceConfiguration configuration) 
+    {
+    	this.bookRepository = bookRepository;
+    	this.configuration = configuration;
+    	Qproducer = new Producerq(configuration);
+		Qproducer.initialise();
+		Tlistener = new Listenert(configuration,bookRepository);
+		Tlistener.initTopic();
+		new Thread(Tlistener).start();
+		//System.out.println("After thread ..");
     }
-
+    
     @GET
     @Path("/{isbn}")
     @Timed(name = "view-book")
@@ -65,9 +80,7 @@ public class BookResource {
 	String location = "/books/" + savedBook.getIsbn();
 	BookDto bookResponse = new BookDto(savedBook);
 	bookResponse.addLink(new LinkDto("view-book", location, "GET"));
-	bookResponse
-	.addLink(new LinkDto("update-book-status", location, "PUT"));
-
+	bookResponse.addLink(new LinkDto("update-book-status", location, "PUT"));
 	return Response.status(201).entity(bookResponse).build();
     }
 
@@ -85,8 +98,14 @@ public class BookResource {
     @Path("/{isbn}")
     @Timed(name = "update-book-status")
     public Response updateBookStatus(@PathParam("isbn") LongParam isbn,
-	    @DefaultValue("available") @QueryParam("status") Status status) {
+	@DefaultValue("available") @QueryParam("status") Status status) 
+    {
 	Book book = bookRepository.getBookByISBN(isbn.get());
+	if (status == Book.Status.lost)
+	{
+		//System.out.println(configuration.getLibraryName()+":"+book.getIsbn());
+		Qproducer.sendDataByQueue(configuration.getLibraryName()+":"+book.getIsbn());
+	}
 	book.setStatus(status);
 
 	BookDto bookResponse = new BookDto(book);
@@ -99,11 +118,11 @@ public class BookResource {
     @DELETE
     @Path("/{isbn}")
     @Timed(name = "delete-book")
-    public BookDto deleteBook(@PathParam("isbn") LongParam isbn) {
+    public BookDto deleteBook(@PathParam("isbn") LongParam isbn) 
+    {
 	bookRepository.delete(isbn.get());
 	BookDto bookResponse = new BookDto(null);
 	bookResponse.addLink(new LinkDto("create-book", "/books", "POST"));
-
 	return bookResponse;
     }
 }

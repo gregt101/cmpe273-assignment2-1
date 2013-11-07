@@ -1,6 +1,7 @@
 package edu.sjsu.cmpe.library.repository;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import edu.sjsu.cmpe.library.domain.Book;
 
@@ -44,4 +45,6 @@ public interface BookRepositoryInterface {
      *            an ISBN of the book to be deleted
      */
     void delete(Long isbn);
+    
+    public ConcurrentHashMap<Long, Book> getHashMap();
 }

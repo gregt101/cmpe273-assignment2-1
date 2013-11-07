@@ -12,36 +12,35 @@ import com.yammer.dropwizard.config.Environment;
 import de.spinscale.dropwizard.jobs.JobsBundle;
 import edu.sjsu.cmpe.procurement.api.resources.RootResource;
 import edu.sjsu.cmpe.procurement.config.ProcurementServiceConfiguration;
+import edu.sjsu.cmpe.procurement.domain.Consumerq;
+import edu.sjsu.cmpe.procurement.domain.Publishert;
 
-public class ProcurementService extends Service<ProcurementServiceConfiguration> {
+public class ProcurementService extends Service<ProcurementServiceConfiguration> 
+{
+    //private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    final Client jerseyClient;
 
-    /**
-     * FIXME: THIS IS A HACK!
-     */
-    public static Client jerseyClient;
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception 
+    {
 	new ProcurementService().run(args);
     }
 
     @Override
-    public void initialize(Bootstrap<ProcurementServiceConfiguration> bootstrap) {
+    public void initialize(Bootstrap<ProcurementServiceConfiguration> bootstrap)
+    {
 	bootstrap.setName("procurement-service");
-	/**
-	 * NOTE: All jobs must be placed under edu.sjsu.cmpe.procurement.jobs
-	 * package
-	 */
 	bootstrap.addBundle(new JobsBundle("edu.sjsu.cmpe.procurement.jobs"));
     }
 
     @Override
     public void run(ProcurementServiceConfiguration configuration,
-	    Environment environment) throws Exception {
+	    Environment environment) throws Exception 
+	{
 	jerseyClient = new JerseyClientBuilder()
-	.using(configuration.getJerseyClientConfiguration())
-	.using(environment).build();
+				   .using(configuration.getJerseyClientConfiguration())
+				   .using(environment)
+				   .build();
 
 	/**
 	 * Root API - Without RootResource, Dropwizard will throw this
@@ -51,12 +50,13 @@ public class ProcurementService extends Service<ProcurementServiceConfiguration>
 	 * com.sun.jersey.server.impl.application.RootResourceUriRules: The
 	 * ResourceConfig instance does not contain any root resource classes.
 	 */
-	environment.addResource(RootResource.class);
+	environment.addResource(new RootResource());
 
-	String queueName = configuration.getStompQueueName();
-	String topicName = configuration.getStompTopicPrefix();
-	log.debug("Queue name is {}. Topic is {}", queueName, topicName);
-	// TODO: Apollo STOMP Broker URL and login
+	Consumerq queueConsumer = new Consumerq(configuration);
+    queueConsumer.initQueue();
+	
+    Publishert topic = new Publishert(configuration,jerseyClient);
+    topic.initTopic();
 
     }
 }

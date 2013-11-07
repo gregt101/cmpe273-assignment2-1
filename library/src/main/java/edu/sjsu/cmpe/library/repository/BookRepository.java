@@ -23,10 +23,17 @@ public class BookRepository implements BookRepositoryInterface {
 	isbnKey = 0;
     }
 
-    private ConcurrentHashMap<Long, Book> seedData(){
+    @Override
+    public ConcurrentHashMap<Long, Book> getHashMap()
+    {
+    	return bookInMemoryMap;
+    }
+    
+    private ConcurrentHashMap<Long, Book> seedData()
+    {
 	ConcurrentHashMap<Long, Book> bookMap = new ConcurrentHashMap<Long, Book>();
 	Book book = new Book();
-	book.setIsbn(1);
+	book.setIsbn(1L);
 	book.setCategory("computer");
 	book.setTitle("Java Concurrency in Practice");
 	try {
@@ -37,7 +44,7 @@ public class BookRepository implements BookRepositoryInterface {
 	bookMap.put(book.getIsbn(), book);
 
 	book = new Book();
-	book.setIsbn(2);
+	book.setIsbn(2L);
 	book.setCategory("computer");
 	book.setTitle("Restful Web Services");
 	try {
@@ -71,7 +78,6 @@ public class BookRepository implements BookRepositoryInterface {
 	Long isbn = generateISBNKey();
 	newBook.setIsbn(isbn);
 	// TODO: create and associate other fields such as author
-
 	// Finally, save the new book into the map
 	bookInMemoryMap.putIfAbsent(isbn, newBook);
 

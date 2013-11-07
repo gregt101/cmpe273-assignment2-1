@@ -13,7 +13,7 @@ import org.fusesource.stomp.jms.StompJmsDestination;
 
 import edu.sjsu.cmpe.library.config.LibraryServiceConfiguration;
 
-public class Producerq 
+public class Producerq
 {
 	private String queueName; 
 	private String userName; 

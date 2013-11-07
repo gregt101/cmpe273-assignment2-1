@@ -11,9 +11,6 @@ stompQueueName: /queue/26759.book.orders
 # If book.* doesn't work, try book.all
 stompTopicName: /topic/26759.book.*
 
-# Name for library A
-libraryName: library-a
-
 # TODO: Apollo STOMP Broker URL and login
 #apolloUser: "admin"
 #apolloPassword: "password"

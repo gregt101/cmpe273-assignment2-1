@@ -1,6 +1,7 @@
 package edu.sjsu.cmpe.procurement.config;
 
 import javax.validation.Valid;
+import javax.annotation.Nonnull;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -17,6 +18,22 @@ public class ProcurementServiceConfiguration extends Configuration {
     @NotEmpty
     @JsonProperty
     private String stompTopicPrefix;
+    
+    @NotEmpty
+    @JsonProperty
+    private String apolloUser;
+    
+    @NotEmpty
+    @JsonProperty
+    private String apolloPassword;
+    
+    @NotEmpty
+    @JsonProperty
+    private String apolloHost;
+    
+    @Nonnull
+    @JsonProperty
+    private Integer apolloPort;
 
     @Valid
     @NotNull
@@ -27,14 +44,16 @@ public class ProcurementServiceConfiguration extends Configuration {
      * 
      * @return
      */
-    public JerseyClientConfiguration getJerseyClientConfiguration() {
+    public JerseyClientConfiguration getJerseyClientConfiguration() 
+    {
 	return httpClient;
     }
 
     /**
      * @return the stompQueueName
      */
-    public String getStompQueueName() {
+    public String getStompQueueName()
+    {
 	return stompQueueName;
     }
 
@@ -42,16 +61,59 @@ public class ProcurementServiceConfiguration extends Configuration {
      * @param stompQueueName
      *            the stompQueueName to set
      */
-    public void setStompQueueName(String stompQueueName) {
+    public void setStompQueueName(String stompQueueName)
+    {
 	this.stompQueueName = stompQueueName;
     }
 
-    public String getStompTopicPrefix() {
+    public String getStompTopicPrefix() 
+    {
 	return stompTopicPrefix;
     }
 
-    public void setStompTopicPrefix(String stompTopicPrefix) {
+    public void setStompTopicPrefix(String stompTopicPrefix) 
+    {
 	this.stompTopicPrefix = stompTopicPrefix;
     }
+    
+    public Integer getApolloPort() 
+    {
+    	return apolloPort;
+    }
+
+    public void setApolloPort(Integer apolloPort) 
+    {
+    	this.apolloPort = apolloPort;
+    }
+    
+    public String getApolloHost() 
+    {
+    	return apolloHost;
+    }
+
+    public void setApolloHost(String apolloHost) 
+    {
+    	this.apolloHost = apolloHost;
+    }
+    
+    public String getApolloPassword() 
+    {
+    	return apolloPassword;
+    }
+
+    public void setApolloPassword(String apolloPassword) 
+    {
+    	this.apolloPassword= apolloPassword;
+    }
+    
+    public String getApolloUser() 
+    {
+    	return apolloUser;
+    }
+
+    public void setApolloUser(String apolloUser) 
+    {
+    	this.apolloUser = apolloUser;
+    } 
 
 }

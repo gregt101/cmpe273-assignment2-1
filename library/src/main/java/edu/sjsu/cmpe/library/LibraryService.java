@@ -33,24 +33,18 @@ public class LibraryService extends Service<LibraryServiceConfiguration> {
 
     @Override
     public void run(LibraryServiceConfiguration configuration,
-	    Environment environment) throws Exception {
-	// This is how you pull the configurations from library_x_config.yml
+	    Environment environment) throws Exception 
+	{
 	String queueName = configuration.getStompQueueName();
 	String topicName = configuration.getStompTopicName();
-	String userName = configuration.getApolloUser();
-	String passWord = configuration.getApolloPassword();
-	String hostNum = configuration.getApolloHost();
-	Integer portNum = configuration.getApolloPort();
-	log.debug("{} - Queue name is {}. Topic name is {}",
-		configuration.getLibraryName(),userName,passWord,hostNum,portNum,queueName,
-		topicName);
-	// TODO: Apollo STOMP Broker URL and login
-
+	log.debug("Queue name is {}. Topic name is {}",
+		configuration.getLibraryName(),queueName,topicName);
+	
 	/** Root API */
 	environment.addResource(RootResource.class);
 	/** Books APIs */
 	BookRepositoryInterface bookRepository = new BookRepository();
-	environment.addResource(new BookResource(bookRepository));
+	environment.addResource(new BookResource(bookRepository,configurations));
 
 	/** UI Resources */
 	environment.addResource(new HomeResource(bookRepository));
