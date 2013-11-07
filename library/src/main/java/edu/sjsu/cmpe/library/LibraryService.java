@@ -32,19 +32,17 @@ public class LibraryService extends Service<LibraryServiceConfiguration> {
     }
 
     @Override
-    public void run(LibraryServiceConfiguration configuration,
-	    Environment environment) throws Exception 
+    public void run(LibraryServiceConfiguration configuration,Environment environment) throws Exception 
 	{
 	String queueName = configuration.getStompQueueName();
 	String topicName = configuration.getStompTopicName();
-	log.debug("Queue name is {}. Topic name is {}",
-		configuration.getLibraryName(),queueName,topicName);
+	log.debug("Queue name is {}. Topic name is {}",queueName,topicName);
 	
 	/** Root API */
 	environment.addResource(RootResource.class);
 	/** Books APIs */
 	BookRepositoryInterface bookRepository = new BookRepository();
-	environment.addResource(new BookResource(bookRepository,configurations));
+	environment.addResource(new BookResource(bookRepository,configuration));
 
 	/** UI Resources */
 	environment.addResource(new HomeResource(bookRepository));

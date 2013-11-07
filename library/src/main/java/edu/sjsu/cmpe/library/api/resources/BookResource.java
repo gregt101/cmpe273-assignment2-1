@@ -43,8 +43,7 @@ public class BookResource
      * @param bookRepository
      *            a BookRepository instance
      */
-    public BookResource(BookRepositoryInterface bookRepository,
-    		LibraryServiceConfiguration configuration) 
+    public BookResource(BookRepositoryInterface bookRepository,LibraryServiceConfiguration configuration) 
     {
     	this.bookRepository = bookRepository;
     	this.configuration = configuration;
