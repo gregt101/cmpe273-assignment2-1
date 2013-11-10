@@ -19,13 +19,13 @@ apolloPort: 61613
 # HTTP-specific options.
 http:
   # Root Path http://{host}:{port}/xxx
-  rootPath: /procurement/v1/*
+  rootPath: /*
 
   # The port on which the HTTP server listens for service requests.
-  port: 8003
+  port: 9090
 
   # The port on which the HTTP server listens for administrative requests.
-  adminPort: 9003
+  adminPort: 9000
 
 # Logging settings.
 logging:

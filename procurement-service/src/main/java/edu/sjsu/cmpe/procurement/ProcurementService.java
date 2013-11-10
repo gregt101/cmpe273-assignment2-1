@@ -1,7 +1,7 @@
 package edu.sjsu.cmpe.procurement;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+/*import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;*/
 
 import com.sun.jersey.api.client.Client;
 import com.yammer.dropwizard.Service;
@@ -35,19 +35,11 @@ public class ProcurementService extends Service<ProcurementServiceConfiguration>
     public void run(ProcurementServiceConfiguration configuration,
 	    Environment environment) throws Exception 
 	{
-	final Client jerseyClient = new JerseyClientBuilder()
-				   .using(configuration.getJerseyClientConfiguration())
-				   .using(environment)
-				   .build();
-
-	/**
-	 * Root API - Without RootResource, Dropwizard will throw this
-	 * exception:
-	 * 
-	 * ERROR [2013-10-31 23:01:24,489]
-	 * com.sun.jersey.server.impl.application.RootResourceUriRules: The
-	 * ResourceConfig instance does not contain any root resource classes.
-	 */
+	final Client jerseyClient = new JerseyClientBuilder().using(configuration.getJerseyClientConfiguration())
+				   										 .using(environment)
+				   										 .build();
+	//environment.addResource(new (jerseyClient));
+	
 	environment.addResource(new RootResource());
 
 	Consumerq Qconsumer = new Consumerq(configuration);

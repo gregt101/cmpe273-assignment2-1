@@ -101,8 +101,8 @@ public class Publishert extends Job
 				 		":\"" + sb.getShipment().get(i).getTitle() + "\"" +
 				 		":\"" + sb.getShipment().get(i).getCategory() + "\"" +
 				 		":\"" + sb.getShipment().get(i).getCoverimage() +"\"" ;		
-				
-				
+		
+
 				TextMessage msg = session[libA].createTextMessage(data);
 				msg.setLongProperty("id", System.currentTimeMillis());
 				System.out.println("Sending to " + topicName[libA] + " "+ 
